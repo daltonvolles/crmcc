@@ -1,0 +1,35 @@
+:root {
+  --color-bg: #fafaf7;
+  --color-surface: #ffffff;
+  --color-border: #e6e4de;
+  --color-text: #17181c;
+  --color-text-muted: #6b6e76;
+  --color-accent: #1d4ed8;
+  --color-accent-hover: #1e40af;
+
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-manrope), sans-serif;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  margin: 0;
+}
