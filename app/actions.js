@@ -2,7 +2,8 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { criarContato } from '../lib/contatos'
+import { criarContato, atualizarEtapa, pesquisarContatos } from '../lib/contatos'
+import { ETAPAS } from './etapas'
 import { listarAnotacoes, criarAnotacao, atualizarAnotacao, apagarAnotacao } from '../lib/anotacoes'
 import { telefoneValido } from '../lib/telefone'
 import { revalidatePath } from 'next/cache'
@@ -58,7 +59,29 @@ export async function salvarContato(formData) {
   }
 
   const contato = await criarContato({ nome, email, telefone })
+  revalidatePath('/', 'layout')
   return { contato }
+}
+
+export async function mudarEtapa(contatoId, etapa) {
+  await exigirLogin()
+  exigirId(contatoId)
+
+  if (typeof etapa !== 'string' || !Object.hasOwn(ETAPAS, etapa)) {
+    return { erro: 'Etapa inválida.' }
+  }
+
+  const contato = await atualizarEtapa({ id: contatoId, etapa })
+  // Kanban, dashboard e página do contato mostram o dado novo ao serem abertos.
+  revalidatePath('/', 'layout')
+  return { contato }
+}
+
+export async function buscarContatos(termo) {
+  await exigirLogin()
+  const limpo = texto(termo)
+  if (limpo.length < 2 || limpo.length > LIMITES.nome) return []
+  return pesquisarContatos(limpo)
 }
 
 export async function buscarAnotacoes(contatoId) {

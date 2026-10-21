@@ -11,18 +11,7 @@ export default function BotaoAprovar({ id }) {
       type="button"
       disabled={pending}
       onClick={() => startTransition(() => aprovar(id))}
-      style={{
-        background: 'var(--color-accent)',
-        color: '#fff',
-        border: 'none',
-        borderRadius: 'var(--radius)',
-        padding: '8px 16px',
-        fontSize: '14px',
-        fontWeight: 700,
-        fontFamily: 'inherit',
-        cursor: pending ? 'default' : 'pointer',
-        opacity: pending ? 0.7 : 1,
-      }}
+      className="botao botao-primario"
     >
       {pending ? 'Aprovando...' : 'Aprovar'}
     </button>
